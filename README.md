@@ -330,13 +330,13 @@ git tag
 ### Create a lightweight tag for current commit or for [commit sha], if informed.
 
 ```console
-git tag <name> [commit_sha]
+git tag <tag_name> [commit_sha]
 ```
 
 ### Create an annoted tag for current commit if [commit sha] it's not informed 
 
 ```console
-git tag -a <name> [commit_sha] [-m "tagging_message"]
+git tag -a <tag_name> [commit_sha] [-m "tagging_message"]
 ```
 e.g.: 
 ```console
@@ -345,6 +345,10 @@ git tag -a v2.1 -m "version 2.1"
 
 ### Show tag data with the commit that was tagged
 
+```console
+git show <tag_name>
+```
+e.g.:
 ```console
 git show v2.1
 ```
