@@ -1,6 +1,8 @@
 # OMGit! <3
 Git Quick Reference
 
+![gitreference](https://github.com/andreia/OMGit/blob/main/images/gitreference.jpg?raw=true)
+
 ## Setting up
 
 ### Set author name 
