@@ -310,7 +310,7 @@ git stash drop [stash_name]
 ```
 e.g.:
 ```console
-$ git stash drop stash@{0}
+git stash drop stash@{0}
 ```
 
 ## Tagging
