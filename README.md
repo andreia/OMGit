@@ -348,3 +348,7 @@ git tag -a v2.1 -m "version 2.1"
 ```console
 git show v2.1
 ```
+
+## References
+
+- https://git-scm.com/
