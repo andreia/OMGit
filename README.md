@@ -1,7 +1,7 @@
 # OMGit! <3
 Git Quick Reference
 
-![gitreference](https://github.com/andreia/OMGit/blob/main/images/gitreference.jpg?raw=true)
+![gitreference](https://github.com/andreia/OMGit/blob/main/images/gitreference.png?raw=true)
 
 ## Setting up
 
@@ -47,6 +47,12 @@ set line-ending style
 e.g.: 
 ```console
 git config --global core.autocrlf input
+```
+
+### List all Git config settings
+
+```console
+git config --list
 ```
 
 ## Workflow
@@ -236,9 +242,17 @@ git reset <path/to/file.txt>
 ```
 
 ### Remove a file from stage area
+(changes to the modified file are discarded)
 
 ```console
 git checkout -- <path/to/file.txt>
+```
+
+### Remove all files from stage area
+(changes to the modified files are discarded)
+
+```console
+git checkout .
 ```
 
 ### Undo local commit
@@ -268,6 +282,12 @@ git revert <commit_sha>
 
 Create a new commit, reverting changes from the specified commit.
 It generates an inversion of changes.
+
+### Change the last (unpushed) commit message
+
+```console
+git commit --amend -m "New message here"
+```
 
 ## Removing
 
@@ -313,6 +333,20 @@ git stash drop [stash_name]
 e.g.:
 ```console
 git stash drop stash@{0}
+```
+
+### Remove untracked files
+(Remove untracked files. Modified files are unchanged)
+
+```console
+git clean -f
+```
+
+### Remove untracked files and directories
+(Remove untracked files and directories. Modified files are unchanged)
+
+```console
+git clean -f -d
 ```
 
 ## Tagging
