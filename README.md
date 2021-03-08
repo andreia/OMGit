@@ -89,6 +89,24 @@ git branch <branch_name>
 
 create a new branch based on current branch
 
+### List all local branches
+
+```console
+git branch
+```
+
+### List all local & remote branches
+
+```console
+git branch -a
+```
+
+### Rename local branch
+
+```console
+git branch -m <old_name> <new_name>
+```
+
 ### Get new changes, branches, and tags from remote repository
 
 (just get the changes, it doesn't merge them - doesn't update tracking branches)
@@ -130,11 +148,7 @@ git add .
 ### Commit staged local changes on current local branch
 
 ```console
-git commit -m "<commit_message>"
-```
-e.g.:
-```console
-git commit -m "Initial commit"
+git commit -m "commit message"
 ```
 
 ### Change to another local branch
@@ -191,7 +205,7 @@ git push --force origin <remote_branch_name>
 
 ### List all operations made on local repository
 
-e.g. commits, checkouts, pull, ...
+e.g.: commits, checkouts, pull, ... (also list removed commits with `git reset`, `git rebase`, ...) 
 
 ```console
 git reflog
@@ -218,6 +232,18 @@ git stash list
 git stash pop
 ```
 
+#### Pick a commit from a branch and apply it to another
+
+```console
+git cherry-pick <commit_hash>
+```
+
+#### Back to previous checkout branch
+
+```console
+git checkout -
+```
+
 ## Checking changes
 
 ### Changes not staged
@@ -232,23 +258,29 @@ git diff
 git diff --staged
 ```
 
+### Show all commits (Git history)
+
+```console
+git log --oneline --graph --all
+```
+
 ## Undo Things
 
 ### Unstage a file
 (retain the changes in working directory)
 
 ```console
-git reset <path/to/file.txt>
+git reset HEAD <path/to/file.txt>
 ```
 
-### Remove a file from stage area
+### Discard changes on unstaged file in working directory
 (changes to the modified file are discarded)
 
 ```console
 git checkout -- <path/to/file.txt>
 ```
 
-### Remove all files from stage area
+### Discard changes on all unstaged files in working directory
 (changes to the modified files are discarded)
 
 ```console
@@ -282,6 +314,12 @@ git revert <commit_sha>
 
 Create a new commit, reverting changes from the specified commit.
 It generates an inversion of changes.
+
+### Reverting local changes to a relative time
+
+```console
+git reset --hard HEAD@{3.minutes.ago}
+```
 
 ### Change the last (unpushed) commit message
 
