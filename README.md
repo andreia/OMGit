@@ -182,6 +182,27 @@ git merge <branch_name_to_merge_on_current_branch>
 git pull origin <remote_branch_name>
 ```
 
+### Conflicts
+
+#### Resolve merge conflicts in favor of pulled changes during a pull
+
+```console
+git checkout --theirs <path/to/file.txt>
+```
+
+#### Resolve merge conflicts in favor of my local changes during a pull
+
+```console
+git checkout --ours <path/to/file.txt>
+```
+
+E.g.:
+
+```console
+git checkout --ours package-lock.json
+```
+
+
 ### Push local changes to a remote branch
 
 ```console
@@ -397,6 +418,12 @@ Types of tags:
 
 ```console
 git tag
+```
+
+### Show the current tag you are
+
+```console
+git describe --tags
 ```
 
 ### Create a lightweight tag for current commit or for [commit sha], if informed.
