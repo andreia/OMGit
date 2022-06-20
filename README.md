@@ -224,6 +224,18 @@ git push --tags origin <remote_branch_name>
 git push --force origin <remote_branch_name>
 ```
 
+Note: You can use `HEAD` instead of `<remote_branch_name>`:
+```console
+$ git push origin HEAD
+```
+
+HEAD is the current branch on your local repository:
+
+```console
+cat .git/HEAD
+ref: refs/heads/<name_of_the_branch>
+```
+
 ### List all operations made on local repository
 
 e.g.: commits, checkouts, pull, ... (also list removed commits with `git reset`, `git rebase`, ...) 
@@ -292,6 +304,13 @@ git log --oneline --graph --all
 
 ```console
 git reset HEAD <path/to/file.txt>
+```
+
+### Unstage all files
+(retain the changes in working directory)
+
+```console
+git reset HEAD -- .
 ```
 
 ### Discard changes on unstaged file in working directory
