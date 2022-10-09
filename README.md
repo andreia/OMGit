@@ -101,12 +101,6 @@ git branch
 git branch -a
 ```
 
-### Rename local branch
-
-```console
-git branch -m <old_name> <new_name>
-```
-
 ### Get new changes, branches, and tags from remote repository
 
 (just get the changes, it doesn't merge them - doesn't update tracking branches)
@@ -226,7 +220,7 @@ git push --force origin <remote_branch_name>
 
 Note: You can use `HEAD` instead of `<remote_branch_name>`:
 ```console
-$ git push origin HEAD
+git push origin HEAD
 ```
 
 HEAD is the current branch on your local repository:
@@ -295,6 +289,91 @@ git diff --staged
 
 ```console
 git log --oneline --graph --all
+```
+
+## Rename Things
+
+### Rename a local branch
+
+```console
+git branch -m <old_name> <new_name>
+```
+
+### Rename an existing remote name
+
+List your existing remotes to get the name of the remote you want to change:
+
+```console
+git remote -v
+
+> origin  https://github.com/USERNAME/REPOSITORY.git (fetch)
+> origin  https://github.com/USERNAME/REPOSITORY.git (push)
+```
+
+Rename the remote from `old_name` to `new_name`:
+
+```console
+git remote rename <old_name> <new_name>
+```
+
+E.g.:
+
+```console
+git remote rename origin production
+```
+
+Check that the remote URL has changed:
+
+```console
+git remote -v
+
+> production  https://github.com/USERNAME/REPOSITORY.git (fetch)
+> production  https://github.com/USERNAME/REPOSITORY.git (push)
+```
+
+### Rename the remote url of an existing local repository to match the renamed remote repository
+
+To rename the existing local repository accordingly to the remote you can first
+rename the repository directory (optional) and then, to rename the remote URL
+to the new name:
+
+List your existing remotes:
+
+```console
+git remote -v
+
+> origin  https://github.com/USERNAME/REPOSITORY.git (fetch)
+> origin  https://github.com/USERNAME/REPOSITORY.git (push)
+```
+
+Rename the remote URL to `new_url`:
+
+```console
+git remote set-url <remote_name> <new_url>
+```
+
+- `<remote_name>` could be `origin` or `upstream` for example
+- `<new_url>` could be the HTTPS or SSH URL
+
+Change the `origin` remote's HTTPS URL e.g.:
+
+```console
+git remote set-url origin https://github.com/USERNAME/NEW-REPOSITORY.git
+```
+
+Change the `origin` remote's SSH URL e.g.:
+
+```console
+git remote set-url origin git@github.com:USERNAME/NEW-REPOSITORY.git
+```
+
+Check that the remote URL has changed:
+
+```console
+git remote -v
+
+> origin  https://github.com/USERNAME/NEW-REPOSITORY.git (fetch)
+> origin  https://github.com/USERNAME/NEW-REPOSITORY.git (push)
 ```
 
 ## Undo Things
@@ -474,3 +553,4 @@ git show v2.1
 ## References
 
 - https://git-scm.com/
+- https://docs.github.com/en/get-started/getting-started-with-git/managing-remote-repositories
