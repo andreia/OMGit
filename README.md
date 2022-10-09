@@ -145,6 +145,19 @@ git add .
 git commit -m "commit message"
 ```
 
+### Add all local files to stage area and commit, with one line:
+
+```console
+git commit -am "Commit message"
+```
+
+Equivalent to:
+
+```console
+git add .
+git commit -m "Commit message"
+```
+
 ### Change to another local branch
 
 ```console
