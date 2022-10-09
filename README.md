@@ -550,6 +550,20 @@ e.g.:
 git show v2.1
 ```
 
+## Updating Remote
+
+Change the remote's URL from SSH to HTTPS:
+
+```console
+git remote set-url origin https://github.com/USERNAME/REPOSITORY.git
+```
+
+Change the remote's URL from HTTPS to SSH:
+
+```console
+git remote set-url origin git@github.com:USERNAME/REPOSITORY.git
+```
+
 ## References
 
 - https://git-scm.com/
