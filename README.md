@@ -1,7 +1,10 @@
 # OMGit! <3
 Git Quick Reference
 
-![gitreference](https://github.com/andreia/OMGit/blob/main/images/gitreference.png?raw=true)
+- [PDF Format](https://github.com/andreia/OMGit/blob/main/pdf/git_quick_reference.pdf) 
+- [Image Format](https://github.com/andreia/OMGit/blob/main/images/git_quick_reference.png)
+
+![Git Cheat Sheet Image](https://github.com/andreia/OMGit/blob/main/images/git_quick_reference_small.jpg?raw=true)
 
 ## Setting up
 
