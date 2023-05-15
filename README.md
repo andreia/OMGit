@@ -8,7 +8,7 @@ Git Quick Reference
 
 ## Setting up
 
-### Set author name 
+### Set author name
 (to be show on version history)
 
 ```console
@@ -23,6 +23,12 @@ git config --global user.name "Andréia Bohner"
 
 ```console
 git config --global user.email "<email>"
+```
+
+### Change author's name and email
+
+```console
+git commit --amend --author="<firstname lastname> <<email>>" --no-edit
 ```
 
 ### Set automatic CLI coloring for Git
@@ -78,19 +84,17 @@ git clone https://github.com/path/repository.git
 
 ### Create a new branch
 
+Create a new branch based on `[base_branch]` or on current branch if `[base_banch]` isn't informed:
+
 ```console
 git checkout -b <branch_name> [base_banch]
 ```
 
-create a new branch based on `[base_branch]` or on current branch if `[base_banch]` isn't informed
-
-or:
+Create a new branch based on current branch:
 
 ```console
 git branch <branch_name>
 ```
-
-create a new branch based on current branch
 
 ### List all local branches
 
@@ -98,15 +102,26 @@ create a new branch based on current branch
 git branch
 ```
 
-### List all local & remote branches
+### List all local and remote branches
 
 ```console
 git branch -a
 ```
 
-### Get new changes, branches, and tags from remote repository
+### List all tracking branches, their upstreams, last commit on branch, and if local branch is ahead, behind, or both
 
-(just get the changes, it doesn't merge them - doesn't update tracking branches)
+```console
+git branch -vv
+```
+
+### List all branches merged into the specified branch
+
+```console
+git branch --merged <branch_name>
+```
+
+### Get new changes, branches, and tags from remote repository
+(just get the changes, it doesn't merge them)
 
 ```console
 git fetch <remote_name>
@@ -161,10 +176,28 @@ git add .
 git commit -m "Commit message"
 ```
 
+### Empty commit
+
+```console
+git commit  --allow-empty
+```
+
 ### Change to another local branch
 
 ```console
 git checkout <branch_name>
+```
+
+### Back to the previous branch
+
+```console
+git checkout -
+```
+
+or:
+
+```console
+git checkout @{-1}
 ```
 
 ### Get a remote branch locally
@@ -192,6 +225,12 @@ git merge <branch_name_to_merge_on_current_branch>
 git pull origin <remote_branch_name>
 ```
 
+#### Pick a commit from a branch and apply it to another
+
+```console
+git cherry-pick <commit_hash>
+```
+
 ### Conflicts
 
 #### Resolve merge conflicts in favor of pulled changes during a pull
@@ -211,7 +250,6 @@ E.g.:
 ```console
 git checkout --ours package-lock.json
 ```
-
 
 ### Push local changes to a remote branch
 
@@ -246,6 +284,12 @@ cat .git/HEAD
 ref: refs/heads/<name_of_the_branch>
 ```
 
+### Force push and ensure you don't overwrite work from others
+
+```console
+git push --force-with-lease origin <branch_name>
+```
+
 ### List all operations made on local repository
 
 e.g.: commits, checkouts, pull, ... (also list removed commits with `git reset`, `git rebase`, ...) 
@@ -256,17 +300,54 @@ git reflog
 
 ### Have to work on another branch. What to do with the changes on current branch?
 
-Move them to stash: a place to temporarily store the modified and staged files in order to change branches
+Move them to stash: a place to temporarily store the modified and staged files in order to change branches.
 
 #### Put the current working directory changes into stash, for later use
 ```console
 git stash
 ```
 
-#### List stack-order of stashed file changes
+#### Put the current working directory changes into stash with a message
+```console
+git stash push -m <message>
+```
+
+#### Put the current working directory changes into stash, including untracked files
+```console
+git stash -u
+```
+or
+```console
+git stash push -u
+```
+or
+```console
+git stash push --include-untracked
+```
+
+#### Add all changed files of the current working directory into stash (ignored, untracked, and tracked)
+```console
+git stash -a
+```
+or
+```console
+git stash --all
+```
+or
+```console
+git stash push --all
+```
+
+#### List all saved stashes
 
 ```console
 git stash list
+```
+
+#### Show the contents of a specific stash in patch form
+
+```console
+git stash show -p <stash@{n}>
 ```
 
 #### Get the stored stash content into working directory, and drop it from stash.
@@ -275,21 +356,15 @@ git stash list
 git stash pop
 ```
 
-#### Pick a commit from a branch and apply it to another
+#### Apply the content of a specific stash without removing it from the stashed list
 
 ```console
-git cherry-pick <commit_hash>
-```
-
-#### Back to previous checkout branch
-
-```console
-git checkout -
+git stash apply <stash@{n}>
 ```
 
 ## Checking changes
 
-### Changes not staged
+### Unstaged changes
 
 ```console
 git diff
@@ -300,11 +375,73 @@ git diff
 ```console
 git diff --staged
 ```
+or
+```console
+git diff --cached
+```
+
+### Staged and unstaged changes
+
+```console
+git diff HEAD
+```
+
+### All files with conflict
+
+```console
+git diff --name-only --diff-filter=U
+```
+
+### Show only changed files
+```console
+git show --name-only
+```
+
+### Changes since a provided period
+```console
+git log --no-merges --raw --since='2 weeks ago'
+```
+or:
+```console
+git whatchanged --since='2 weeks ago'
+```
+
+### Search commits by content
+```console
+git log -S '<content to search>'
+```
+
+### Search by commit message
+```console
+git log --all --grep='content to search'
+```
+or
+```console
+git log --oneline | grep -F 'content to search'
+```
+
+### Search all changes for specific file
+```console
+git log -p <path/to/file.txt>
+```
+
+### All changed files on specific commit
+```console
+git diff-tree --no-commit-id --name-only -r <commit_sha>
+```
 
 ### Show all commits (Git history)
+(history as a one-line short message - sha & message)
 
 ```console
 git log --oneline --graph --all
+```
+
+### Summary of the commits grouped by author
+(with the first line of each commit message)
+
+```console
+git shortlog
 ```
 
 ## Rename Things
@@ -313,6 +450,18 @@ git log --oneline --graph --all
 
 ```console
 git branch -m <old_name> <new_name>
+```
+
+### Rename a remote branch
+
+1. Delete the current remote branch:
+```console
+git push origin --delete <old_name>
+```
+
+2. Push the new local branch with the new name:
+```console
+git push -u origin <new_name>
 ```
 
 ### Rename an existing remote name
@@ -392,6 +541,14 @@ git remote -v
 > origin  https://github.com/USERNAME/NEW-REPOSITORY.git (push)
 ```
 
+### Rename a file
+
+```console
+git mv <old_name> <new_name>
+git commit -m "renamed"
+git push origin main
+```
+
 ## Undo Things
 
 ### Unstage a file
@@ -422,10 +579,15 @@ git checkout -- <path/to/file.txt>
 git checkout .
 ```
 
-### Undo local commit
+### Undo local unpushed commit
+(most recent commit)
 
 ```console
 git reset --soft HEAD^
+```
+
+```console
+git reset HEAD~
 ```
 
 ```console
@@ -434,21 +596,23 @@ git reset HEAD <path/to/file.txt>
 
 ### Reverting changes
 
+(Switches the current branch to the target reference, leaving
+a difference as an uncommitted change.)
+
 ```console
 git reset [--hard] <target_reference>
 ```
 
-Switches the current branch to the target reference, leaving
-a difference as an uncommitted change.
-
 - `--hard`: discard all changes
+
+### Reverting changes of a specific commit
+
+(Create a new commit, reverting changes from the specified commit.
+It generates an inversion of changes.)
 
 ```console
 git revert <commit_sha>
 ```
-
-Create a new commit, reverting changes from the specified commit.
-It generates an inversion of changes.
 
 ### Reverting local changes to a relative time
 
@@ -460,6 +624,12 @@ git reset --hard HEAD@{3.minutes.ago}
 
 ```console
 git commit --amend -m "New message here"
+```
+
+### Untrack files without deleting on working directory
+
+```console
+git rm --cached <path/to/file.txt>
 ```
 
 ## Removing
@@ -479,6 +649,11 @@ git push --delete <remote_name> <branch_name>
 e.g.:
 ```console
 git push --delete origin my_remote_branch
+```
+
+### Remove file from working directory and Git repo
+```console
+git rm <path/to/file.txt>
 ```
 
 ### Remove a tag from local repository
@@ -506,6 +681,12 @@ git stash drop [stash_name]
 e.g.:
 ```console
 git stash drop stash@{0}
+```
+
+### Remove all stored stashes
+
+```console
+git stash clear
 ```
 
 ### Remove untracked files
@@ -566,18 +747,64 @@ e.g.:
 git show v2.1
 ```
 
-## Updating Remote
+## Remote
 
-Change the remote's URL from SSH to HTTPS:
+### List all remote references
+
+```console
+git remote
+```
+
+### Change the remote's URL from SSH to HTTPS:
 
 ```console
 git remote set-url origin https://github.com/USERNAME/REPOSITORY.git
 ```
 
-Change the remote's URL from HTTPS to SSH:
+### Change the remote's URL from HTTPS to SSH:
 
 ```console
 git remote set-url origin git@github.com:USERNAME/REPOSITORY.git
+```
+
+## Notes
+
+### Add object notes
+
+```console
+git notes add -m 'Note message here'
+```
+
+### Show all notes
+
+```console
+git log --show-notes='*'
+```
+
+## More useful commands
+
+### Git help guide
+```console
+git help -g
+```
+
+### Git web-based UI
+```console
+git instaweb --httpd apache2
+git instaweb --httpd nginx
+git instaweb --httpd=webrick
+```
+
+### Sync with remote, overwrite local changes
+```console
+git fetch origin && git reset --hard origin/<branch_name> && git clean -f -d
+```
+
+### Find the commit that has introduced a bug in the code (using binary search)
+```console
+git bisect start
+git bisect bad
+git bisect good
 ```
 
 ## References
